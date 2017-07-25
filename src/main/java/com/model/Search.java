@@ -3,22 +3,29 @@ package com.model;
 /**
  * Created by Timur on 23.07.2017.
  */
+
 public class Search {
     private int id;
     private String query;
+    private String status;
     private String user;
+    private String created;
 
     public Search(){};
 
-    public Search(int id, String query, String user){
+    public Search(int id, String query, String status, String user, String created){
         this.id = id;
         this.query = query;
+        this.status = status;
         this.user = user;
+        this.created = created;
     }
 
-    public Search(String query, String user){
+    public Search(String query, String status, String user, String created){
         this.query = query;
+        this.status = status;
         this.user = user;
+        this.created = created;
     }
 
     public int getId(){
@@ -43,5 +50,21 @@ public class Search {
 
     public void setUser(String user){
         this.user = user;
+    }
+
+    public String getStatus(){
+        return this.status;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
+    }
+
+    public String getCreated(){
+        return this.created;
+    }
+
+    public void setCreated(String created){
+        this.created = created;
     }
 }
