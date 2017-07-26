@@ -85,4 +85,17 @@ public class SearchDAOImpl implements SearchDAO{
         }
         return false;
     }
+
+    public String deleteSearch(String id){
+        Connection connection = ConnectionFactory.getConnection();
+        try{
+            java.sql.Statement stmt = connection.createStatement();
+            stmt.executeUpdate("DELETE FROM searches WHERE id="+id);
+            return "Database was updated";
+        }
+        catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
 }

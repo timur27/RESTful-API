@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.model.Search;
 import org.json.JSONObject;
 
 
@@ -10,4 +11,5 @@ import org.json.JSONObject;
 public interface SearchDAO {
     JSONObject getSearch(String username);
     JSONObject getAllSearches();
+    String deleteSearch(String id);
 }

@@ -31,23 +31,16 @@ public class App {
         Spark.get("/search", new Route(){
             @Override
             public Object handle(Request request, Response response){
-                Search search = new Search(request.queryParams("q"), "CREATED", request.queryParams("user"),new
-                        SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
-                return searchDAO.insertSearch(search);
+                String id = request.queryParams("id");
+                if (id == null){
+                    Search search = new Search(request.queryParams("q"), "CREATED", request.queryParams("user"),new
+                            SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
+                    return searchDAO.insertSearch(search);
+                }
+                else
+                    return searchDAO.deleteSearch(id);
             }
         });
-
-        /*
-        Spark.get("/searches/:username", new Route(){
-            @Override
-            public Object handle(Request request, Response response){
-                String username = request.queryParams("username");
-
-                JSONObject jsonObject = searchDAO.getSearch(username);
-                return jsonObject.toString();
-            }
-        });*/
-
     }
 
 
