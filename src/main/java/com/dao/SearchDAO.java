@@ -9,7 +9,12 @@ import org.json.JSONObject;
  */
 
 public interface SearchDAO {
+
     JSONObject getSearch(String username);
     JSONObject getAllSearches();
     String deleteSearch(String id);
+    boolean insertSearch(Search search);
+    String changeSearchStatus(String oldQuery, String newQuery);
+    boolean addResult(String q, StringBuffer result);
+
 }

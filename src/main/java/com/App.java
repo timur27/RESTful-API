@@ -3,6 +3,7 @@ package com;
 import com.dao.SearchDAOImpl;
 import com.model.Search;
 import org.json.JSONObject;
+import com.apacheHttp.ApacheHttpClient;
 import spark.*;
 
 import java.text.SimpleDateFormat;
@@ -34,8 +35,14 @@ public class App {
                 String id = request.queryParams("id");
                 if (id == null){
                     Search search = new Search(request.queryParams("q"), "CREATED", request.queryParams("user"),new
-                            SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
-                    return searchDAO.insertSearch(search);
+                            SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()), null);
+                    searchDAO.insertSearch(search);
+                    ApacheHttpClient client = new ApacheHttpClient();
+                    searchDAO.changeSearchStatus(request.queryParams("q"), "В ОБРАБОТКЕ");
+                    StringBuffer result = new StringBuffer();
+                    result = client.makeRequest(request.queryParams("q"));
+                    searchDAO.addResult(request.queryParams("q"), result);
+                    return true;
                 }
                 else
                     return searchDAO.deleteSearch(id);

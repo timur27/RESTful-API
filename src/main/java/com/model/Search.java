@@ -10,22 +10,25 @@ public class Search {
     private String status;
     private String user;
     private String created;
+    private String result;
 
     public Search(){};
 
-    public Search(int id, String query, String status, String user, String created){
+    public Search(int id, String query, String status, String user, String created, String result){
         this.id = id;
         this.query = query;
         this.status = status;
         this.user = user;
         this.created = created;
+        this.result = result;
     }
 
-    public Search(String query, String status, String user, String created){
+    public Search(String query, String status, String user, String created, String result){
         this.query = query;
         this.status = status;
         this.user = user;
         this.created = created;
+        this.result = result;
     }
 
     public int getId(){
@@ -66,5 +69,13 @@ public class Search {
 
     public void setCreated(String created){
         this.created = created;
+    }
+
+    public String getResult(){
+        return this.result;
+    }
+
+    public void setResult(String result){
+        this.result = result;
     }
 }

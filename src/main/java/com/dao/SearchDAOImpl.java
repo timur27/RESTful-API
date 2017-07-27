@@ -29,6 +29,7 @@ public class SearchDAOImpl implements SearchDAO{
                 search.setUser(rs.getString("User"));
                 search.setCreated(rs.getString("Created"));
                 search.setQuery(rs.getString("Query"));
+                search.setResult(rs.getString("Result"));
                 list.add(search);
             }
             jsonObject.put("Search Details for " + username, list);
@@ -55,6 +56,7 @@ public class SearchDAOImpl implements SearchDAO{
                 search.setStatus(rs.getString("Status"));
                 search.setUser(rs.getString("User"));
                 search.setCreated(rs.getString("Created"));
+                search.setResult(rs.getString("Result"));
                 list.add(search);
             }
             jsonObject.put("SearchDetails", list);
@@ -69,11 +71,12 @@ public class SearchDAOImpl implements SearchDAO{
     public boolean insertSearch(Search search){
         Connection connection = ConnectionFactory.getConnection();
         try{
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO searches VALUES(NULL, ?, ?, ?, ?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO searches VALUES(NULL, ?, ?, ?, ?,?)");
             ps.setString(1, search.getQuery());
             ps.setString(2, search.getStatus());
             ps.setString(3,search.getUser());
             ps.setString(4,search.getCreated());
+            ps.setString(5,search.getResult());
             int i = ps.executeUpdate();
             if (i == 1){
                 System.out.println("DA");
@@ -97,5 +100,32 @@ public class SearchDAOImpl implements SearchDAO{
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public String changeSearchStatus(String oldQuery, String newQuery){
+        Connection connection = ConnectionFactory.getConnection();
+        try{
+            java.sql.Statement stmt = connection.createStatement();
+            stmt.executeUpdate("update searches set Status='"+newQuery+"'"+"where Query='"+oldQuery+"'");
+            return "Search status was successfully updated and now is " + newQuery;
+        }
+        catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean addResult(String q, StringBuffer result){
+        Connection connection = ConnectionFactory.getConnection();
+        String tmp = result.toString();
+        try{
+            java.sql.Statement stmt = connection.createStatement();
+            stmt.executeUpdate("update searches set Result='"+tmp+"'where Query='"+q+"'");
+            return true;
+        }
+        catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return false;
     }
 }
